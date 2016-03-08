@@ -27,6 +27,7 @@ return [
     'securityscheme' => 'group',
     'auth_userpk' => 'id',
     'auth_userfk' => 'user_id',
+    'auth_usernode' => 'auth.users',
     'auth_usertable' => 'Users',
     'auth_userfield' => 'username',
     'auth_passwordfield' => 'passwd',
