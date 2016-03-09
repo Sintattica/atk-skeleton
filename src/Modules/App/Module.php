@@ -10,14 +10,9 @@ class Module extends \Sintattica\Atk\Core\Module
 {
     static $module = 'app';
 
-    function __construct()
+    public function boot()
     {
-        $m = static::$module;
-
-        $atk = Atk::getInstance();
-        $atk->registerNode($m . '.test_node', TestNode::class, ['admin', 'add', 'edit', 'delete']);
-
-        $menu = Menu::getInstance();
-        $menu->addMenuItem("test_node", Tools::dispatch_url($m . '.test_node', 'admin'), 'main', [$m . '.test_node', 'admin'], 0, $m);
+        $this->registerNode('test_node', TestNode::class, ['admin', 'add', 'edit', 'delete']);
+        $this->addNodeToMenu('test_node', 'test_node', 'admin');
     }
 }

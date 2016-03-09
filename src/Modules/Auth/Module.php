@@ -10,18 +10,14 @@ class Module extends \Sintattica\Atk\Core\Module
 {
     static $module = 'auth';
 
-    function __construct()
+    public function boot()
     {
-        $m = static::$module;
+        $this->registerNode('users', Users::class, ['admin', 'add', 'edit', 'delete']);
+        $this->registerNode('groups', Groups::class, ['admin', 'add', 'edit', 'delete']);
+        $this->registerNode('users_groups', UsersGroups::class);
 
-        $atk = Atk::getInstance();
-        $atk->registerNode($m . '.users', Users::class, ['admin', 'add', 'edit', 'delete']);
-        $atk->registerNode($m . '.groups', Groups::class, ['admin', 'add', 'edit', 'delete']);
-        $atk->registerNode($m . '.users_groups', UsersGroups::class);
-
-        $menu = Menu::getInstance();
-        $menu->addMenuItem('auth', '', 'main', 1, 0, $m);
-        $menu->addMenuItem('users', Tools::dispatch_url($m . '.users', 'admin'), 'auth', [$m . '.users', 'admin'], 0, $m);
-        $menu->addMenuItem('groups', Tools::dispatch_url($m . '.groups', 'admin'), 'auth', [$m . '.groups', 'admin'], 0, $m);
+        $this->addMenuItem('auth');
+        $this->addNodeToMenu('users', 'users', 'admin', 'auth');
+        $this->addNodeToMenu('groups', 'groups', 'admin', 'auth');
     }
 }
