@@ -6,7 +6,7 @@ return [
     /**
      * change identifier to unique string
      */
-    'identifier' => 'atk-project',
+    'identifier' => 'atk-skeleton',
 
     'language_basedir' => $_baseDir . 'src/languages/',
 
