@@ -10,6 +10,9 @@ Create a project with Composer: for example we want to create the project "newpr
 	
 Edit the .env.example file with your environment values, than copy ".env.example" to ".env". We use phpdotenv to load the parameters for thedevelopment environment.
 
+Administrator password is stored in the .env file.
+To generate a new password, use the php command line vendor/sintattica/atk/Utils/generatehash.php
+
 Change the "identifier" parameter in "config/atk.php" to something unique ("newproject" in this case).
 
 Create a MySql database and execute the file src/atk-skeleton.sql, than you can delete this file.

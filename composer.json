@@ -9,6 +9,7 @@
     "atk"
   ],
   "require": {
+    "php": ">=5.5.9",
     "sintattica/atk": "~9.0"
   },
   "autoload": {

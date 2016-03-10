@@ -18,10 +18,9 @@ return [
     'language' => 'it',
 
     'authentication' => 'db',
-    'authentication_md5' => false,
-    'auth_usecryptedpassword' => false,
+
+    'auth_usecryptedpassword' => true,
     'restrictive' => true,
-    'authentication_cookie' => false,
 
     /** Security database configuration **/
     'securityscheme' => 'group',
