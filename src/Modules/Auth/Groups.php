@@ -19,12 +19,12 @@ class Groups extends Node
         $this->add(new Attribute('name', A::AF_OBLIGATORY | A::AF_UNIQUE | A::AF_SEARCHABLE));
         $this->add(new TextAttribute('description'));
 
-        $attr = new ShuttleRelation('users', 'auth.users_groups', 'auth.users', A::AF_HIDE_LIST | A::AF_HIDE_ADD);
+        $attr = new ShuttleRelation('users', A::AF_HIDE_LIST | A::AF_HIDE_ADD, 'auth.users_groups', 'auth.users');
         $this->add($attr);
         $attr->setLocalKey('group_id');
         $attr->setRemoteKey('user_id');
 
-        $this->add(new ProfileAttribute('accessrights', '', A::AF_BLANKLABEL | A::AF_HIDE_ADD));
+        $this->add(new ProfileAttribute('accessrights', A::AF_BLANKLABEL | A::AF_HIDE_ADD));
 
         $this->setTable('Groups');
         $this->setOrder('name');

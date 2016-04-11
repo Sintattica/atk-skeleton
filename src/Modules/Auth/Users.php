@@ -26,11 +26,11 @@ class Users extends Node
         $this->add(new Attribute('username', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE | A::AF_UNIQUE));
 
         $pwdFlags = A::AF_OBLIGATORY | A::AF_HIDE_LIST | PasswordAttribute::AF_PASSWORD_NO_ENCODE | PasswordAttribute::AF_PASSWORD_NO_VALIDATE;
-        $this->add(new PasswordAttribute('passwd', true, $pwdFlags , 0, ['minalphabeticchars' => 6, 'minnumbers' => 2]));
+        $this->add(new PasswordAttribute('passwd', $pwdFlags , true, 0, ['minalphabeticchars' => 6, 'minnumbers' => 2]));
         $this->add(new EmailAttribute('email'));
         $this->add(new BoolAttribute('disabled', A::AF_SEARCHABLE | A::AF_FORCE_LOAD));
 
-        $attr = new ShuttleRelation('groups', 'auth.users_groups', 'auth.groups', A::AF_SEARCHABLE);
+        $attr = new ShuttleRelation('groups', A::AF_SEARCHABLE, 'auth.users_groups', 'auth.groups');
         $this->add($attr);
         $attr->setLocalKey('user_id');
         $attr->setRemoteKey('group_id');
