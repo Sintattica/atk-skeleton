@@ -25,7 +25,7 @@ class Users extends Node
         $this->add(new Attribute('lastname', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE));
         $this->add(new Attribute('username', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE | A::AF_UNIQUE));
 
-        $pwdFlags = A::AF_OBLIGATORY | A::AF_HIDE_LIST | PasswordAttribute::AF_PASSWORD_NO_ENCODE | PasswordAttribute::AF_PASSWORD_NO_VALIDATE;
+        $pwdFlags = A::AF_OBLIGATORY | A::AF_HIDE_LIST | PasswordAttribute::AF_PASSWORD_NO_VALIDATE;
         $this->add(new PasswordAttribute('passwd', $pwdFlags , true, 0, ['minalphabeticchars' => 6, 'minnumbers' => 2]));
         $this->add(new EmailAttribute('email'));
         $this->add(new BoolAttribute('disabled', A::AF_SEARCHABLE | A::AF_FORCE_LOAD));
