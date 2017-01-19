@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'test_node' => 'Test node',
+    'testNode' => 'Test Node',
 ];

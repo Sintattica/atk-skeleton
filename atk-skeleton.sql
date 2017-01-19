@@ -2,10 +2,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `app_testnode`
+--  Table structure for `app_testNode`
 -- ----------------------------
-DROP TABLE IF EXISTS `app_testnode`;
-CREATE TABLE `app_testnode` (
+DROP TABLE IF EXISTS `app_testNode`;
+CREATE TABLE `app_testNode` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
@@ -13,10 +13,10 @@ CREATE TABLE `app_testnode` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Table structure for `auth_accessrights`
+--  Table structure for `auth_accessRights`
 -- ----------------------------
-DROP TABLE IF EXISTS `auth_accessrights`;
-CREATE TABLE `auth_accessrights` (
+DROP TABLE IF EXISTS `auth_accessRights`;
+CREATE TABLE `auth_accessRights` (
   `node` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `group_id` int(11) unsigned NOT NULL,
@@ -48,7 +48,8 @@ CREATE TABLE `auth_users` (
   `firstname` varchar(255) NOT NULL DEFAULT '',
   `lastname` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
-  `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isDisabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isAdmin` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;

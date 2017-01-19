@@ -15,4 +15,6 @@ return [
     'name' => 'Nome',
     'email' => 'E-Mail',
     'passwd' => 'Password',
+    'isDisabled' => 'Disabilitato',
+    'isAdmin' => 'Admin',
 ];

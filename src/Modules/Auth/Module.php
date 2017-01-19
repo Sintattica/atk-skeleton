@@ -10,7 +10,7 @@ class Module extends \Sintattica\Atk\Core\Module
     {
         $this->registerNode('users', Users::class, ['admin', 'add', 'edit', 'delete']);
         $this->registerNode('groups', Groups::class, ['admin', 'add', 'edit', 'delete']);
-        $this->registerNode('users_groups', UsersGroups::class);
+        $this->registerNode('users_groups', Users_Groups::class);
     }
 
     public function boot()

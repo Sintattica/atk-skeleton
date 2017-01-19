@@ -41,10 +41,11 @@ return [
     /** Security configuration **/
     'authentication' => 'db',
     'restrictive' => true,
+    'securityscheme' => 'group',
     'administratorpassword' => $_parameters['atk']['administratorpassword'],
+
     'auth_ignorepasswordmatch' => $_parameters['atk']['auth_ignorepasswordmatch'],
     'auth_usecryptedpassword' => true,
-    'securityscheme' => 'group',
     'auth_userpk' => 'id',
     'auth_userfk' => 'user_id',
     'auth_usernode' => 'auth.users',
@@ -52,8 +53,9 @@ return [
     'auth_userfield' => 'username',
     'auth_passwordfield' => 'passwd',
     'auth_emailfield' => 'email',
-    'auth_accountdisablefield' => 'disabled',
-    'auth_leveltable' => 'auth_usersgroups',
+    'auth_accountdisablefield' => 'isDisabled',
+    'auth_administratorfield' => 'isAdmin',
+    'auth_leveltable' => 'auth_users_groups',
     'auth_levelfield' => 'group_id',
-    'auth_accesstable' => 'auth_accessrights',
+    'auth_accesstable' => 'auth_accessRights',
 ];

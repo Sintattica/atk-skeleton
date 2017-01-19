@@ -16,7 +16,5 @@
     "psr-4": {
       "App\\": "src/"
     }
-  },
-  "require-dev": {
   }
 }
