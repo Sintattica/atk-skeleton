@@ -26,7 +26,7 @@ class Groups extends Node
 
         $this->add(new ProfileAttribute('accessrights', A::AF_BLANKLABEL | A::AF_HIDE_ADD));
 
-        $this->setTable('Groups');
+        $this->setTable('auth_groups');
         $this->setOrder('name');
         $this->setDescriptorTemplate('[name]');
     }

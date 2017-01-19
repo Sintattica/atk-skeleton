@@ -17,7 +17,7 @@ class Users extends Node
     {
         parent::__construct($nodeUri, Node::NF_ADD_LINK);
 
-        $this->setTable('Users');
+        $this->setTable('auth_users');
 
         $this->add(new Attribute('id', A::AF_AUTOKEY));
 

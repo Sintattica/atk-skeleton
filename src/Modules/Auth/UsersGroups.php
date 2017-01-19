@@ -15,6 +15,6 @@ class UsersGroups extends Node
         $this->add(new ManyToOneRelation('user_id', Attribute::AF_PRIMARY, 'auth.users'));
         $this->add(new ManyToOneRelation('group_id', Attribute::AF_PRIMARY, 'auth.groups'));
 
-        $this->setTable('Users_Groups');
+        $this->setTable('auth_users_groups');
     }
 }

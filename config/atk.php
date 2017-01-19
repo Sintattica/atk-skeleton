@@ -1,38 +1,59 @@
 <?php
 
-$_baseDir = __DIR__ . '/../';
+/**
+ * ATK config file
+ *
+ * Put here ATK related config variables only, common to all environments.
+ * ATK default config is vendor/sintattica/atk/src/Resources/config/atk.php
+ *
+ * If you need custom config variables, use app.php and use Config::get('app', 'some-variable')
+ */
+
+$env = getenv('APP_ENV');
+if (!$env || !in_array($env, ['dev', 'staging', 'prod'])) {
+    die('atk.php: APP_ENV must be set!');
+}
+
+$_baseDir = __DIR__.'/../';
+$_parameters = require __DIR__.'/parameters.'.$env.'.php';
 
 return [
     /**
      * change identifier to unique string
      */
-    'identifier' => 'atk-skeleton',
+    'identifier' => $_parameters['atk']['identifier'],
 
-    'language_basedir' => $_baseDir . 'src/languages/',
+    'language' => 'en',
 
     'modules' => [
         App\Modules\Auth\Module::class,
         App\Modules\App\Module::class,
     ],
 
-    'language' => 'it',
+    'language_basedir' => $_baseDir.'languages/',
+    'debug' => $_parameters['atk']['debug'],
+    'meta_caching' => $_parameters['atk']['meta_caching'],
+    'db' => $_parameters['atk']['db'],
+    'login_logo' => '/images/login_logo.jpg',
+    'brand_logo' => '/images/brand_logo.png',
+    'session_autorefresh' => true,
 
+    /** Security configuration **/
     'authentication' => 'db',
-
-    'auth_usecryptedpassword' => true,
     'restrictive' => true,
-
-    /** Security database configuration **/
+    'administratorpassword' => $_parameters['atk']['administratorpassword'],
+    'auth_ignorepasswordmatch' => $_parameters['atk']['auth_ignorepasswordmatch'],
+    'auth_usecryptedpassword' => true,
     'securityscheme' => 'group',
     'auth_userpk' => 'id',
     'auth_userfk' => 'user_id',
     'auth_usernode' => 'auth.users',
-    'auth_usertable' => 'Users',
+    'auth_usertable' => 'auth_users',
     'auth_userfield' => 'username',
     'auth_passwordfield' => 'passwd',
     'auth_emailfield' => 'email',
     'auth_accountdisablefield' => 'disabled',
-    'auth_leveltable' => 'Users_Groups',
+    'auth_leveltable' => 'auth_usersgroups',
     'auth_levelfield' => 'group_id',
-    'auth_accesstable' => 'AccessRights',
+    'auth_accesstable' => 'auth_accessrights',
 ];

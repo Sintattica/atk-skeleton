@@ -8,21 +8,18 @@ Create a project with Composer: for example we want to create the project "newpr
 	$ cd newproject
 	
 	
-Edit the .env.example file with your environment values, than copy ".env.example" to ".env". We use phpdotenv to load the parameters for thedevelopment environment.
+Duplicate config/parameters.dist.php to config/parameters.dev.php and change the variables values to fit your development environment.
 
-Administrator password is stored in the .env file.
-To generate a new password, use the php command line vendor/sintattica/atk/Utils/generatehash.php
+Change the administratorpassword on config/parameters.prod.php and config/staging.php to something you only known. The default password is "administrator"
 
-Change the "identifier" parameter in "config/atk.php" to something unique ("newproject" in this case).
+Change the identifier to something unique.
 
-Create a MySql database and execute the file src/atk-skeleton.sql, than you can delete this file.
+Change the web/images/brand_logo.png and web/images/login_logo.jpg.
+
+use the atk-skeleton.sql to create the database tables.
 
 Create an Apache/Nginx virtualhost with the public folder "web".
 
 If you need to configure other config parameters, take a look at the default options in vendor/sintattica/atk/src/Resources/config/atk.php
 
-
-	
-
-
-
+The deploy.php is a basic template for the deployment with deployer.org

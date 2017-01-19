@@ -1,11 +1,22 @@
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `AccessRights`
+--  Table structure for `app_testnode`
 -- ----------------------------
-DROP TABLE IF EXISTS `AccessRights`;
-CREATE TABLE `AccessRights` (
+DROP TABLE IF EXISTS `app_testnode`;
+CREATE TABLE `app_testnode` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `auth_accessrights`
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_accessrights`;
+CREATE TABLE `auth_accessrights` (
   `node` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `group_id` int(11) unsigned NOT NULL,
@@ -15,33 +26,22 @@ CREATE TABLE `AccessRights` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `Groups`
+--  Table structure for `auth_groups`
 -- ----------------------------
-DROP TABLE IF EXISTS `Groups`;
-CREATE TABLE `Groups` (
+DROP TABLE IF EXISTS `auth_groups`;
+CREATE TABLE `auth_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `TestNode`
+--  Table structure for `auth_users`
 -- ----------------------------
-DROP TABLE IF EXISTS `TestNode`;
-CREATE TABLE `TestNode` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Table structure for `Users`
--- ----------------------------
-DROP TABLE IF EXISTS `Users`;
-CREATE TABLE `Users` (
+DROP TABLE IF EXISTS `auth_users`;
+CREATE TABLE `auth_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
   `passwd` varchar(255) NOT NULL,
@@ -49,14 +49,15 @@ CREATE TABLE `Users` (
   `lastname` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `Users_Groups`
+--  Table structure for `auth_users_groups`
 -- ----------------------------
-DROP TABLE IF EXISTS `Users_Groups`;
-CREATE TABLE `Users_Groups` (
+DROP TABLE IF EXISTS `auth_users_groups`;
+CREATE TABLE `auth_users_groups` (
   `user_id` int(11) unsigned NOT NULL,
   `group_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`user_id`,`group_id`)
