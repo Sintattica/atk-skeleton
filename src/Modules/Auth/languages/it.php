@@ -19,4 +19,5 @@ return [
     'isAdmin' => 'Admin',
     'u2f_keys' => 'Chiavi U2F',
     'u2f_register' => 'Registra Chiave',
+    'isU2FEnabled' => 'Abilita U2F',
 ];
