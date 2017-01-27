@@ -5,4 +5,6 @@ return [
     'passwd' => 'Password',
     'isDisabled' => 'Disabled',
     'isAdmin' => 'Admin',
+    'u2f_keys' => 'U2F keys',
+    'u2f_register' => 'Register Key',
 ];

@@ -23,7 +23,7 @@ return [
      */
     'identifier' => $_parameters['atk']['identifier'],
 
-    'language' => 'en',
+    'language' => 'it',
 
     'modules' => [
         App\Modules\Auth\Module::class,
@@ -58,4 +58,11 @@ return [
     'auth_leveltable' => 'auth_users_groups',
     'auth_levelfield' => 'group_id',
     'auth_accesstable' => 'auth_accessRights',
+
+    'auth_enable_rememberme' => true,
+    'auth_rememberme_dbtable' => 'auth_rememberMe',
+
+    'auth_enable_u2f' => true,
+    'auth_u2f_dbtable' => 'auth_u2f',
+    'auth_u2f_enabledfield' => 'isU2FEnabled',
 ];

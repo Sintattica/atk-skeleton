@@ -17,4 +17,6 @@ return [
     'passwd' => 'Password',
     'isDisabled' => 'Disabilitato',
     'isAdmin' => 'Admin',
+    'u2f_keys' => 'Chiavi U2F',
+    'u2f_register' => 'Registra Chiave',
 ];
