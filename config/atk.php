@@ -34,7 +34,7 @@ return [
     'debug' => $_parameters['atk']['debug'],
     'meta_caching' => $_parameters['atk']['meta_caching'],
     'db' => $_parameters['atk']['db'],
-    'login_logo' => '/images/login_logo.jpg',
+    'login_logo' => '/images/login_logo.png',
     'brand_logo' => '/images/brand_logo.png',
     'session_autorefresh' => true,
 
