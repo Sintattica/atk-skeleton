@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "sintattica/atk": "9.0.x-dev"
+    "sintattica/atk": "9.0.x-dev",
+    "silex/silex": "^2.0"
   },
   "autoload": {
     "psr-4": {

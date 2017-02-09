@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50713
+ Source Host           : localhost
+ Source Database       : atk-skeleton
+
+ Target Server Type    : MySQL
+ Target Server Version : 50713
+ File Encoding         : utf-8
+
+ Date: 02/09/2017 15:31:21 PM
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -10,7 +26,7 @@ CREATE TABLE `app_testNode` (
   `name` varchar(255) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `auth_accessRights`
@@ -26,6 +42,21 @@ CREATE TABLE `auth_accessRights` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
+--  Table structure for `auth_api`
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_api`;
+CREATE TABLE `auth_api` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `selector` char(12) NOT NULL,
+  `token` char(64) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `selector` (`selector`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `auth_groups`
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_groups`;
@@ -36,6 +67,38 @@ CREATE TABLE `auth_groups` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+--  Table structure for `auth_rememberMe`
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_rememberMe`;
+CREATE TABLE `auth_rememberMe` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `selector` char(12) NOT NULL,
+  `token` char(64) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `expires` datetime NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `selector` (`selector`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `auth_u2f`
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_u2f`;
+CREATE TABLE `auth_u2f` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `keyHandle` varchar(255) NOT NULL,
+  `publicKey` varchar(255) NOT NULL,
+  `certificate` text NOT NULL,
+  `counter` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `auth_users`
@@ -50,9 +113,10 @@ CREATE TABLE `auth_users` (
   `email` varchar(255) NOT NULL DEFAULT '',
   `isDisabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `isAdmin` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isU2FEnabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `auth_users_groups`

@@ -7,4 +7,8 @@
 
 return [
     'some-variable' => 'This is a test config variable, you can safely remove me',
+
+    'api' => [
+        'dbtable' => 'auth_api',
+    ],
 ];
