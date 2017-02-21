@@ -12,7 +12,7 @@ class TestNode extends Node
     function __construct($nodeUri)
     {
         parent::__construct($nodeUri, Node::NF_ADD_LINK | Node::NF_EDITAFTERADD);
-        $this->setTable('app_testNode');
+        $this->setTable('app_testnode');
 
         $this->add(new Attribute('id', Attribute::AF_AUTOKEY));
         $this->add(new Attribute('name', Attribute::AF_OBLIGATORY));
