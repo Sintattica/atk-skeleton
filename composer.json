@@ -11,7 +11,8 @@
   "require": {
     "php": ">=5.5.9",
     "sintattica/atk": "9.0.x-dev",
-    "silex/silex": "^2.0"
+    "silex/silex": "^2.0",
+    "lcobucci/jwt": "^3.2"
   },
   "autoload": {
     "psr-4": {

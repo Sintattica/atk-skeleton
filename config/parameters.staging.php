@@ -6,7 +6,7 @@
 
 return [
     'atk' => [
-        'identifier' => 'atk-skeleton-staging', // CHANGE ME!
+        'identifier' => 'atk-skeleton.staging', // CHANGE ME!
 
         'db' => [
             'default' => [

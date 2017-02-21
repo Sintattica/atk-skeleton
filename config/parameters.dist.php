@@ -9,7 +9,7 @@
 return [
     'atk' => [
 
-        'identifier' => 'atk-skeleton-dev', // CHANGE ME!
+        'identifier' => 'atk-skeleton.dev', // CHANGE ME!
 
         'db' => [
             'default' => [

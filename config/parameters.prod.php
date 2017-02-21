@@ -7,7 +7,7 @@
 return [
     'atk' => [
 
-        'identifier' => 'atk-skeleton-prod', // CHANGE ME!
+        'identifier' => 'atk-skeleton.prod', // CHANGE ME!
 
 
         'db' => [
