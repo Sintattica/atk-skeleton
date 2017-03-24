@@ -8,7 +8,7 @@ class Module extends \Sintattica\Atk\Core\Module
 
     public function register()
     {
-        $this->registerNode('users', Users::class, ['admin', 'add', 'edit', 'delete']);
+        $this->registerNode('users', Users::class, ['admin', 'add', 'edit', 'delete', 'impersonate']);
         $this->registerNode('groups', Groups::class, ['admin', 'add', 'edit', 'delete']);
         $this->registerNode('users_groups', Users_Groups::class);
         $this->registerNode('u2f', U2F::class);

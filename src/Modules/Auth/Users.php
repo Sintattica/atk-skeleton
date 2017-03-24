@@ -7,9 +7,13 @@ use Sintattica\Atk\Attributes\Attribute as A;
 use Sintattica\Atk\Attributes\BoolAttribute;
 use Sintattica\Atk\Attributes\EmailAttribute;
 use Sintattica\Atk\Attributes\PasswordAttribute;
+use Sintattica\Atk\Core\Config;
 use Sintattica\Atk\Core\Node;
+use Sintattica\Atk\Core\Tools;
 use Sintattica\Atk\Relations\OneToManyRelation as O2M;
 use Sintattica\Atk\Relations\ShuttleRelation;
+use Sintattica\Atk\Security\SecurityManager;
+use Sintattica\Atk\Session\SessionManager;
 
 class Users extends Node
 {
@@ -43,5 +47,52 @@ class Users extends Node
         if ($record['disabled']) {
             return '#CCCCCC';
         }
+    }
+
+    public function recordActions($record, &$actions, &$mraactions)
+    {
+        if ($record && is_array($record) && $this->allowed('impersonate', $record)) {
+
+            $actionbase = Config::getGlobal('dispatcher').'?atknodeuri='.$this->atkNodeUri().'&atkselector=[pk]';
+            $actions['impersonate'] = $actionbase.'&atkaction=impersonate';
+        }
+    }
+
+    public function action_impersonate()
+    {
+
+        $isCli = php_sapi_name() === 'cli';
+        if($isCli){
+            die('cli not allowed');
+        }
+
+        $selector = Tools::atkArrayNvl($this->m_postvars, 'atkselector', '');
+        if($selector == ''){
+            die('wrong selector');
+        }
+        $record = $this->select($selector)->mode('view')->getFirstRow();
+        if(!$record){
+            die('not allowed');
+        }
+
+
+        if ($this->allowed('impersonate', $record)) {
+            $secMan = SecurityManager::getInstance();
+            $user = $secMan->m_authorization->getUser($record[Config::getGlobal('auth_userfield')]);
+            if(!$user){
+                die('wrong user');
+            }
+
+            $user['AUTH'] = 'impersonate';
+            $sm = SessionManager::getInstance();
+            $sm->globalVar('authentication', ['authenticated' => 1, 'user' => $user], true);
+            $session = $sm::getSession();
+            $session['login'] = 1;
+
+            header('User: '.$user['name']);
+            header('Location: '.$_SERVER['PHP_SELF']);
+        }
+
+        exit;
     }
 }

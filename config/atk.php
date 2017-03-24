@@ -65,4 +65,6 @@ return [
     'auth_enable_u2f' => true,
     'auth_u2f_dbtable' => 'auth_u2f',
     'auth_u2f_enabledfield' => 'isU2FEnabled',
+
+    'icon_impersonate' => 'fa fa-reply',
 ];
