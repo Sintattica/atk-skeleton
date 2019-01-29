@@ -44,7 +44,7 @@ class Users extends Node
 
     function rowColor($record)
     {
-        if ($record['disabled']) {
+        if ($record['isDisabled']) {
             return '#CCCCCC';
         }
     }
