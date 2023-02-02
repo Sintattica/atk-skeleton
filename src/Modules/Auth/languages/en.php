@@ -1,11 +1,20 @@
 <?php
 
 return [
-    'auth' => 'Authentication',
+    'auth' => 'Autenticazione',
+    'link_users_add' => 'New',
+    'link_groups_add' => 'Add',
+    'users' => 'Users',
+    'user_id' => 'User',
+    'groups' => 'Groups',
+    'firstname' => 'Name',
+    'lastname' => 'Surname',
+    'username' => 'Username',
+    'disabled' => 'Disabled',
+    'description' => 'Description',
+    'name' => 'Name',
+    'email' => 'E-Mail',
     'passwd' => 'Password',
-    'isDisabled' => 'Disabled',
-    'isAdmin' => 'Admin',
-    'u2f_keys' => 'U2F keys',
-    'u2f_register' => 'Register Key',
-    'isU2FEnabled' => 'Enable U2F',
+    'isDisabled' => 'Is Disabled',
+    'isAdmin' => 'Admin'
 ];

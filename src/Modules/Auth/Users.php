@@ -4,95 +4,120 @@ namespace App\Modules\Auth;
 
 use Sintattica\Atk\Attributes\Attribute;
 use Sintattica\Atk\Attributes\Attribute as A;
-use Sintattica\Atk\Attributes\BoolAttribute;
 use Sintattica\Atk\Attributes\EmailAttribute;
+use Sintattica\Atk\Attributes\ListAttribute;
 use Sintattica\Atk\Attributes\PasswordAttribute;
+use Sintattica\Atk\Attributes\SwitchAttribute;
 use Sintattica\Atk\Core\Config;
 use Sintattica\Atk\Core\Node;
 use Sintattica\Atk\Core\Tools;
-use Sintattica\Atk\Relations\OneToManyRelation as O2M;
+use Sintattica\Atk\Db\Db;
 use Sintattica\Atk\Relations\ShuttleRelation;
 use Sintattica\Atk\Security\SecurityManager;
-use Sintattica\Atk\Session\SessionManager;
 
 class Users extends Node
 {
+
     function __construct($nodeUri)
     {
-        parent::__construct($nodeUri, Node::NF_ADD_LINK);
+        parent::__construct($nodeUri, Node::NF_NO_EXTENDED_SEARCH | Node::NF_ADD_LINK | Node::NF_EXPORT | Node::NF_COPY);
 
-        $this->setTable('auth_users');
+        $this->setTable('auth_utente');
         $this->setOrder('[table].lastname, [table].firstname');
-        $this->setDescriptorTemplate('[username]');
+        $this->setDescriptorTemplate('[lastname] [firstname]');
 
         $this->add(new Attribute('id', A::AF_AUTOKEY));
+        $this->add(new Attribute('username', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE | A::AF_UNIQUE | A::AF_READONLY_EDIT));
+        $pwdFlags = Attribute::AF_OBLIGATORY | A::AF_HIDE_LIST | PasswordAttribute::AF_PASSWORD_NO_VALIDATE;
+        $this->add(new PasswordAttribute('passwd', $pwdFlags, true));
+
+
         $this->add(new Attribute('firstname', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE));
         $this->add(new Attribute('lastname', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE));
-        $this->add(new Attribute('username', A::AF_FORCE_LOAD | A::AF_OBLIGATORY | A::AF_SEARCHABLE | A::AF_UNIQUE));
+        $this->add(new ListAttribute('lingua', A::AF_SEARCHABLE | A::AF_OBLIGATORY, Config::getGlobal('supported_languages')));
 
-        $pwdFlags = A::AF_OBLIGATORY | A::AF_HIDE_LIST | PasswordAttribute::AF_PASSWORD_NO_VALIDATE;
-        $this->add(new PasswordAttribute('passwd', $pwdFlags, true, ['minalphabeticchars' => 6, 'minnumbers' => 2]));
-        $this->add(new EmailAttribute('email'));
-        $this->add(new BoolAttribute('isDisabled', A::AF_SEARCHABLE | A::AF_FORCE_LOAD));
-        $this->add(new BoolAttribute('isAdmin', A::AF_SEARCHABLE | A::AF_FORCE_LOAD));
-        $this->add(new BoolAttribute('isU2FEnabled', A::AF_HIDE_LIST));
+        $this->add(new EmailAttribute('email', A::AF_HIDE_LIST));
+
+
+        $this->add(new SwitchAttribute('disabled', A::AF_SEARCHABLE | A::AF_FORCE_LOAD));
+
+        //NB: si assume un solo amministratore!
+        $this->add(new SwitchAttribute('amministratore', A::AF_HIDE));
 
         $this->add(new ShuttleRelation('groups', A::AF_SEARCHABLE | A::AF_CASCADE_DELETE, 'auth.users_groups', 'auth.groups', 'user_id', 'group_id'));
 
-        $this->add(new O2M('u2f_keys', O2M::AF_HIDE_LIST | O2M::AF_CASCADE_DELETE, 'auth.u2f', 'user_id'));
     }
 
-    function rowColor($record)
+    /**
+     * Torna un array assoc. degli utenti (id => descriptor), sulla base delle condizioni passate
+     *
+     * @param string|array $idProfiles id profilo o array di id
+     * @param bool $onlyEnabled Solo gli utenti abilitati
+     * @param string|array $idUsers Utente/i da caricare comunque, a prescindere dalle condizioni precedenti
+     * @return array Gli utenti corrispondenti
+     */
+    function getAssoc($idProfiles = null, $onlyEnabled = true, $idUsers = null)
     {
-        if ($record['disabled']) {
-            return '#CCCCCC';
-        }
-    }
+        $ret = [];
 
-    public function recordActions($record, &$actions, &$mraactions)
-    {
-        if ($record && is_array($record) && $this->allowed('impersonate', $record)) {
+        // (non considera mai gli utenti clienti)
+        $condition = "true"; // TODO: refactoring
 
-            $actionbase = Config::getGlobal('dispatcher').'?atknodeuri='.$this->atkNodeUri().'&atkselector=[pk]';
-            $actions['impersonate'] = $actionbase.'&atkaction=impersonate';
-        }
-    }
-
-    public function action_impersonate()
-    {
-
-        $isCli = php_sapi_name() === 'cli';
-        if($isCli){
-            die('cli not allowed');
-        }
-
-        $selector = Tools::atkArrayNvl($this->m_postvars, 'atkselector', '');
-        if($selector == ''){
-            die('wrong selector');
-        }
-        $record = $this->select($selector)->mode('view')->getFirstRow();
-        if(!$record){
-            die('not allowed');
-        }
-
-
-        if ($this->allowed('impersonate', $record)) {
-            $secMan = SecurityManager::getInstance();
-            $user = $secMan->m_authorization->getUser($record[Config::getGlobal('auth_userfield')]);
-            if(!$user){
-                die('wrong user');
+        $filtersOR = [];
+        if ($idProfiles or $onlyEnabled) {
+            $filters = [];
+            if ($idProfiles) {
+                // profili specifici
+                if (!is_array($idProfiles)) {
+                    $idProfiles = [$idProfiles];
+                }
+                $filters[] = sprintf("up.%s IN (%s)", Config::getGlobal('auth_levelfield'), self::implodeSQL($idProfiles));
             }
-
-            $user['AUTH'] = 'impersonate';
-            $sm = SessionManager::getInstance();
-            $sm->globalVar('authentication', ['authenticated' => 1, 'user' => $user], true);
-            $session = $sm::getSession();
-            $session['login'] = 1;
-
-            header('User: '.$user['name']);
-            header('Location: '.$_SERVER['PHP_SELF']);
+            if ($onlyEnabled) {
+                // solo utenti abilitati
+                $filters[] = "u.disabled = 0";
+            }
+            $filtersOR[] = '(' . implode(' AND ', $filters) . ')';
+        }
+        if ($idUsers) {
+            // utenti specifici
+            if (!is_array($idUsers)) {
+                $idUsers = array($idUsers);
+            }
+            $filtersOR[] = "u.id IN (" . Utils::implodeSQL($idUsers) . ")";
+        }
+        if ($filtersOR) {
+            $condition .= ' AND (' . implode(' OR ', $filtersOR) . ')';
         }
 
-        exit;
+        $sql = sprintf("
+            SELECT id, %s FROM %s u
+            LEFT JOIN %s up ON u.id = up.%s
+            WHERE $condition
+            ORDER BY lastname, firstname",
+            implode(', ', $this->descriptorFields()), $this->getTable(),
+            Config::getGlobal('auth_leveltable'), Config::getGlobal('auth_userfk'));
+
+        $rows = $this->getDb()->getRows($sql);
+        foreach ($rows as $row) {
+            $ret[$row['id']] = $this->descriptor($row);
+        }
+
+        return $ret;
+    }
+
+
+
+    /**
+     * @param array $pieces
+     * @param string $sep Separatore dei valori
+     * @return string
+     */
+    private static function implodeSQL($pieces, $sep = ',')
+    {
+        foreach ($pieces as &$p) {
+            $p = Tools::escapeSQL($p);
+        }
+        return "'" . implode("'" . $sep . " '", $pieces) . "'";
     }
 }

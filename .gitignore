@@ -1,10 +1,17 @@
-.idea
-.DS_Store
+###> symfony/framework-bundle ###
 .env
-composer.lock
-composer.phar
-deployer.phar
-/vendor
-/config/parameters.dev.php
-ssl.crt
-ssl.key
+/var/
+/vendor/
+
+.DS_Store
+.idea
+
+public/.htaccess
+docker/data
+docker/sqlserver/data
+docker/mysql/data
+docker/php/data
+docker/mosquitto/data
+docker/redis/data
+docker/nginx/data
+bin/custom
