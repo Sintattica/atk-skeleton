@@ -28,7 +28,6 @@ services:
       - atk-network
     environment:
       - XDEBUG_TRIGGER=PHPSTORM
-      - APP_ENV=dev
     volumes:
       - ~/.gitconfig:/root/.gitconfig
       - ~/.ssh:/root/.ssh

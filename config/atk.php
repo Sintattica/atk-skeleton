@@ -42,9 +42,9 @@ return [
     'meta_caching' => $isDevEnv === false,
     'db' => [
         'default' => [
-            'host' => '127.0.0.1',
+            'host' => 'mysql',
             'port' => '3306',
-            'db' => 'atkDemo',
+            'db' => 'atk',
             'user' => 'root',
             'password' => 'root',
             'charset' => 'utf8',

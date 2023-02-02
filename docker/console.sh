@@ -12,7 +12,7 @@ case "$1" in "help"|"h")
   ;;
 
 "init-mysql-data")
-
+  docker exec -i mysql mysql -uroot -proot atk < atk-init-sql/atkDemo.sql
 ;;
 
 "composer-install")
@@ -44,6 +44,10 @@ case "$1" in "help"|"h")
 
 "atk-update")
   docker/console.sh composer-update sintattica/atk
+  ;;
+
+*)
+  echo "$1 $2 is not a valid command"
   ;;
 
 esac

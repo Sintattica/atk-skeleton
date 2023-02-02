@@ -5,7 +5,7 @@ namespace App\Modules\App;
 
 
 use Sintattica\Atk\AdminLte\UIStateColors;
-use Sintattica\Atk\Attributes\ActionAttribute;
+use Sintattica\Atk\Attributes\ActionButtonAttribute;
 use Sintattica\Atk\Attributes\Attribute;
 use Sintattica\Atk\Attributes\Attribute as A;
 use Sintattica\Atk\Attributes\BoolAttribute;
@@ -23,6 +23,7 @@ use Sintattica\Atk\Attributes\StateColorAttribute;
 use Sintattica\Atk\Attributes\SwitchAttribute;
 use Sintattica\Atk\Attributes\TextAttribute;
 use Sintattica\Atk\Attributes\TimeAttribute;
+use Sintattica\Atk\Attributes\SubmitButtonAttribute;
 use Sintattica\Atk\Core\Node;
 use Sintattica\Atk\Core\Tools;
 use Sintattica\Atk\Handlers\ActionHandler;
@@ -57,7 +58,7 @@ class DemoNode extends Node
         $attr->setDisplayMode(TextAttribute::MODE_DEFAULT);
         $this->add($attr);
 
-        $submitButton = new ButtonAttribute("buttonSubmit", ButtonAttribute::AF_DUMMY_SHOW_LABEL);
+        $submitButton = new SubmitButtonAttribute("buttonSubmit", ButtonAttribute::AF_DUMMY_SHOW_LABEL);
         $submitButton->setText("Set Current Date");
         $submitButton->onClick(function ($record) {
             $sql = 'UPDATE demo SET date_a=NOW() where id='.$record['id'];
@@ -66,7 +67,7 @@ class DemoNode extends Node
         $this->add($submitButton);
 
 
-        $actionButton = new ActionAttribute("buttonAction", ButtonAttribute::AF_DUMMY_SHOW_LABEL);
+        $actionButton = new ActionButtonAttribute("buttonAction", ButtonAttribute::AF_DUMMY_SHOW_LABEL);
         $actionButton->setNode($this->atkNodeUri());
         $actionButton->setAction('admin');
         $actionButton->setTarget('_blank');
@@ -75,7 +76,7 @@ class DemoNode extends Node
 
         $this->add((new StateColorAttribute('state_color_2'))
             ->setColorCondition(function () {
-                return UIStateColors::STATE_ORANGE;
+                return UIStateColors::STATE_ORANGE_LIGHT;
             })->setTextContent('ciaoo')
             ->setBordered(true)
             ->setColoredText(true)
@@ -97,7 +98,7 @@ class DemoNode extends Node
         );
 
         $this->add((new StateColorAttribute('state_color_sm'))
-            ->setColor(UIStateColors::STATE_RED)
+            ->setColor(UIStateColors::COLOR_RED_LIGHT)
             ->setTextContent('attribute sm')
             ->setBordered(true)
             ->setColoredText(true)
@@ -113,7 +114,7 @@ class DemoNode extends Node
         $this->add(new PasswordAttribute('password_a', A::AF_SEARCHABLE), 'profilo');
 
         $ckAttr = new CkAttribute('ck_a', A::AF_SEARCHABLE);
-        $ckAttr->setDisplayMode(CkAttribute::MODE_DEFAULT);
+        $ckAttr->setDisplayMode(Attribute::MODE_DEFAULT);
         $this->add($ckAttr, 'profilo');
         //$this->add(new RadioAttribute('radio_a', A::AF_SEARCHABLE, ['opt1', 'opt2', 'opt3'], ['option-1', 'option-2', 'option-3']));
 
@@ -127,18 +128,18 @@ class DemoNode extends Node
         parent::recordActions($record, $actions, $mraactions);
     }
 
-    function action_demo(ActionHandler $handler): ?bool
+    function action_demo(ActionHandler $handler)
     {
         if (!$this->m_postvars['confirm'] and !$this->m_postvars['cancel'] and !$this->m_postvars['atkcancel']) {
 
             // show confirm page Yes/No
             $this->getPage()->addContent($this->renderActionPage($handler->m_action, [$this->confirmAction($this->m_postvars['atkselector'], $handler->m_action)]));
 
-            return false;
+            return;
 
         } elseif ($this->m_postvars['cancel']) {
             $this->redirect();
-            return false;
+            return;
         }
 
         $this->redirect();

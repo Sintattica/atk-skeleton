@@ -1,25 +1,26 @@
 # ATK Skeleton Project
 
-This is the skeleton to get ready with the version 9 of [Atk Framework](https://github.com/Sintattica/atk)
+This is the skeleton to get ready with the version 9.9.x of [Atk Framework](https://github.com/Sintattica/atk)
 
-Create a project with Composer: for example we want to create the project "newproject":
+The following is a guide to bootstrap an atk project in `linux` systems. 
 
-	$ composer create-project sintattica/atk-skeleton newproject
-	$ cd newproject
-	
-	
-Duplicate config/parameters.dist.php to config/parameters.dev.php and change the variables values to fit your development environment.
+First install docker and docker-compose, and then proceed in the following way: 
 
-Change the administratorpassword on config/parameters.prod.php and config/staging.php to something you only known. The default password is "administrator"
+In the project folder:
+1. start all the containers (mysql, php, nginx) with: `docker-compose up` and wait for docker to download and install the images and compose to fire up the containers.
+2. Install the php vendors with: `docker/console.sh composer-install`
+3. Insert in the mysql container the skeleton database with: `docker/console.sh init-mysql-data`
 
-Change the identifier to something unique.
+If you arrived here it means docker has created and started 3 containers:
+1. php: this image is the standard PHP7.2 installed from the provided `Dockerfile` and configured using the configuration files found in `docker/php/...`
+2. mysql: this is a standard mysql server, it's configured using the `docker/mysql/config/my.cnf` and persists the database data locally in `docker/mysql/data`
+3. nginx: standard nginx image configured using the files in `docker/nginx/config...`
 
-Change the web/images/brand_logo.png and web/images/login_logo.jpg.
 
-use the atk-skeleton.sql to create the database tables.
+Now if you navigate to `http://localhost:8080/` you should obtain the ATK Login page.
+The default admin user is 'sintattica' and if `APP_ENV==dev` no password will be required to log in.
 
-Create an Apache/Nginx virtualhost with the public folder "web".
+# 
+#
 
-If you need to configure other config parameters, take a look at the default options in vendor/sintattica/atk/src/Resources/config/atk.php
-
-The deploy.php is a basic template for the deployment with deployer.org
+#### Team Sintattica
