@@ -20,7 +20,6 @@ If you arrived here it means docker has created and started 3 containers:
 Now if you navigate to `http://localhost:8080/` you should obtain the ATK Login page.
 The default admin user is 'sintattica' and if `APP_ENV==dev` no password will be required to log in.
 
-# 
 #
 
 #### Team Sintattica
