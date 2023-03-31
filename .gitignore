@@ -8,3 +8,5 @@ deployer.phar
 /config/parameters.dev.php
 ssl.crt
 ssl.key
+/docker/mysql/data/
+/docker/nginx/log/
