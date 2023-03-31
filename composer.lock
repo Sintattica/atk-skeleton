@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d320673d34772d9a1c5805b726b8051",
+    "content-hash": "2164b72df6c6192074eaea6b05e71c8b",
     "packages": [
         {
             "name": "fightbulc/moment",
@@ -65,24 +65,24 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.9.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "dc5ff11e274a90cc1c743f66c9ad700ce50db9ab"
+                "reference": "dd3a383e599f49777d8b628dadbb90cae435b87e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/dc5ff11e274a90cc1c743f66c9ad700ce50db9ab",
-                "reference": "dc5ff11e274a90cc1c743f66c9ad700ce50db9ab",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/dd3a383e599f49777d8b628dadbb90cae435b87e",
+                "reference": "dd3a383e599f49777d8b628dadbb90cae435b87e",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8",
-                "phpunit/phpunit": "^8.5.28 || ^9.5.21"
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "phpunit/phpunit": "^8.5.32 || ^9.6.3 || ^10.0.12"
             },
             "type": "library",
             "extra": {
@@ -124,7 +124,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.9.0"
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.1"
             },
             "funding": [
                 {
@@ -136,20 +136,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-30T15:51:26+00:00"
+            "time": "2023-02-25T19:38:58+00:00"
         },
         {
             "name": "sintattica/atk",
-            "version": "v9.9.10",
+            "version": "v9.9.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sintattica/atk.git",
-                "reference": "5a0ceccd6fbab4644d3939a2e2521e28846930fb"
+                "reference": "daa472298c3b16f6228807272675b73854873ac4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sintattica/atk/zipball/5a0ceccd6fbab4644d3939a2e2521e28846930fb",
-                "reference": "5a0ceccd6fbab4644d3939a2e2521e28846930fb",
+                "url": "https://api.github.com/repos/Sintattica/atk/zipball/daa472298c3b16f6228807272675b73854873ac4",
+                "reference": "daa472298c3b16f6228807272675b73854873ac4",
                 "shasum": ""
             },
             "require": {
@@ -159,7 +159,7 @@
                 "ext-zlib": "*",
                 "fightbulc/moment": "^1.13",
                 "php": ">=7.2",
-                "smarty/smarty": "^3.1",
+                "smarty/smarty": "^v3.1.48",
                 "vlucas/phpdotenv": "^3.3"
             },
             "type": "library",
@@ -179,22 +179,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Sintattica/atk/issues",
-                "source": "https://github.com/Sintattica/atk/tree/v9.9.10"
+                "source": "https://github.com/Sintattica/atk/tree/v9.9.23"
             },
-            "time": "2023-02-01T11:47:43+00:00"
+            "time": "2023-03-31T13:57:50+00:00"
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.47",
+            "version": "v3.1.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "a09364fe1706cb465e910eb040e592053d7effb8"
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/a09364fe1706cb465e910eb040e592053d7effb8",
-                "reference": "a09364fe1706cb465e910eb040e592053d7effb8",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
                 "shasum": ""
             },
             "require": {
@@ -242,9 +242,9 @@
                 "forum": "http://www.smarty.net/forums/",
                 "irc": "irc://irc.freenode.org/smarty",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v3.1.47"
+                "source": "https://github.com/smarty-php/smarty/tree/v3.1.48"
             },
-            "time": "2022-09-14T11:29:00+00:00"
+            "time": "2023-03-28T19:45:54+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",

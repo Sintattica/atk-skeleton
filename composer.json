@@ -2,7 +2,7 @@
   "name": "sintattica/atk-demo",
   "type": "project",
   "require": {
-    "sintattica/atk": "v9.*",
+    "sintattica/atk": "^v9.9.23",
     "php": ">=7.2"
   },
   "config": {
